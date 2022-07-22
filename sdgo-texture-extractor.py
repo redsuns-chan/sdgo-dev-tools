@@ -19,7 +19,7 @@ def extract_texture(file_name):
 	# detect type
 	if fhex.startswith("424D"):
 		found_type = "bmp"
-	elif fhex.endswith("89504E47"):
+	elif fhex.startswith("89504E47"):
 		found_type = "png"
 	elif fhex.endswith("54525545564953494F4E2D5846494C452E00"):
 		found_type = "tga"
