@@ -6,7 +6,7 @@ import shutil
 sdgo_data_path = "D:/Project/SDGO/data/"
 target_path = sdgo_data_path + "scp/decoded/"
 
-command = "java -jar ./unlua.jar \"" + sdgo_data_path + "scp/{{filename}}.scp" + "\" > \"" + target_path + "{{filename}}.scp\""
+command = "java -jar ./unlua.jar \"" + sdgo_data_path + "scp/{{filename}}.scp" + "\" > \"" + target_path + "{{filename}}.lua\""
 
 def main():
 	print("sdgo script extractor")
@@ -17,8 +17,8 @@ def main():
 			print("decompiling script " + file_name)
 			file_name = file_name.replace(".scp", "")
 			os.system("cmd /c " + command.replace("{{filename}}", file_name))
-			if os.stat(target_path + file_name + ".scp").st_size == 0:
-				os.remove(target_path + file_name + ".scp")
+			if os.stat(target_path + file_name + ".lua").st_size == 0:
+				os.remove(target_path + file_name + ".lua")
 				shutil.copyfile(sdgo_data_path + "scp/" + file_name + ".scp", target_path + file_name + ".lua")
 
 main()
