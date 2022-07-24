@@ -6,6 +6,9 @@ __pycache__/
 # Visual Studio Code Config
 .vscode
 
+hex.txt
+float.txt
+
 # C extensions
 *.so
 
