@@ -1,3 +1,5 @@
+# hex to float convertor
+# author: RedSuns Chan
 
 from os import path, stat
 import struct
