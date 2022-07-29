@@ -1,6 +1,7 @@
 # hex to float convertor
 # author: RedSuns Chan
 
+from cmath import isnan
 from os import path, stat
 import struct
 import sys
@@ -20,7 +21,10 @@ def main(file_path: str, big_endian: bool):
 			le_bytes = bytearray.fromhex(n)
 			if big_endian == False:
 				le_bytes.reverse()
-			converted.append(struct.unpack('!f', le_bytes)[0])
+			float_num = struct.unpack('!f', le_bytes)[0]
+			if isnan(float_num):
+				float_num = struct.unpack('!i', le_bytes)[0]
+			converted.append(float_num)
 		i += 8
 	f.close()
 	print(converted)
