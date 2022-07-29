@@ -20,17 +20,17 @@ def extract_header(f):
 			header_pointer += 4
 		except UnicodeDecodeError:
 			print("Error while reading file bytes")
-	section1 = f.read(1)
+	unknown_num_1 = f.read(1)
 	texture_count = int(f.read(1).hex(), 16)
-	f.read(2)
-	f.read(1)
+	f.read(3)
 	object_count = int(f.read(1).hex(), 16)
-	f.read(2)
-	section3 = f.read(4)
-	section4 = f.read(4)
+	f.read(7)
+	mesh_count = f.read(1)
+	f.read(4)
 	return {
 		"texture_count": texture_count,
-		"bone_count": object_count
+		"bone_count": object_count,
+		"mesh_count": mesh_count
 	}
 
 def extract_bone_names(f, bone_count):
