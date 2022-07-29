@@ -11,7 +11,7 @@ def main(file_path: str, big_endian: bool):
 	f = open(file_path, "r")
 	file_size = stat(file_path).st_size
 	content = f.read(file_size)
-	content = content.replace(" ", "")
+	content = content.replace(" ", "").replace("\n", "").replace("\r", "")
 	converted = []
 	i = 0
 	while (i <= file_size):
@@ -20,7 +20,7 @@ def main(file_path: str, big_endian: bool):
 			le_bytes = bytearray.fromhex(n)
 			if big_endian == False:
 				le_bytes.reverse()
-			converted.append(struct.unpack('!f', le_bytes)[0])
+			converted.append(float("{:.2f}".format(struct.unpack('!f', le_bytes)[0])))
 		i += 8
 	f.close()
 	print(converted)
