@@ -12,7 +12,7 @@ def main(file_path: str, big_endian: bool):
 	f = open(file_path, "r")
 	file_size = stat(file_path).st_size
 	content = f.read(file_size)
-	content = content.replace(" ", "")
+	content = content.replace(" ", "").replace("\n", "").replace("\r", "")
 	converted = []
 	i = 0
 	while (i <= file_size):
