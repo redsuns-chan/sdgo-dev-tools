@@ -21,12 +21,10 @@ def extract_header(f):
 		except UnicodeDecodeError:
 			print("Error while reading file bytes")
 	unknown_num_1 = f.read(1)
-	texture_count = int(f.read(1).hex(), 16)
-	f.read(3)
-	object_count = int(f.read(1).hex(), 16)
-	f.read(7)
-	mesh_count = f.read(1)
+	texture_count = int(reverse_hex(f.read(4).hex()), 16)
+	object_count = int(reverse_hex(f.read(4).hex()), 16)
 	f.read(4)
+	mesh_count = int(reverse_hex(f.read(4).hex()), 16)
 	return {
 		"texture_count": texture_count,
 		"bone_count": object_count,
@@ -45,7 +43,7 @@ def extract_bone_names(f, bone_count):
 				if byte_hex == "0000":
 					bone_str += " "
 				else:
-					letter = byte_hex[2:4]
+					letter = byte_hex[0:2]
 					letter_bytes = bytes(letter, encoding="utf-8")
 					bone_str += str(codecs.decode(letter_bytes, "hex"), "utf-8")
 			except UnicodeDecodeError:
@@ -55,6 +53,14 @@ def extract_bone_names(f, bone_count):
 		bone_str = ""
 	return bones
 
+def reverse_hex(hex: str):
+	output = ""
+	i = len(hex) - 1
+	while i - 1 >= 0:
+		output += hex[i - 1] + hex[i]
+		i -= 2
+	return output
+
 def main(index):
 	try:
 		f = open(sdgo_data_path + 'mdrs/' + index + '.mod', 'rb')
@@ -62,7 +68,7 @@ def main(index):
 			file_info = extract_header(f)
 			file_info["bone_names"] = extract_bone_names(f, file_info["bone_count"])
 			f.close()
-			print(json.dumps(file_info))
+			print(file_info)
 		except FileExistsError:
 			print("unable to close file")
 	except FileNotFoundError:
