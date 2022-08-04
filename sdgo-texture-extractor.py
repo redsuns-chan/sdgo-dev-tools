@@ -3,12 +3,12 @@
 import os
 import pathlib
 
-sdgo_data_path = "D:/Project/SDGO/data/"
+sdgo_data_path = "G:/Games/SDGO_DEV/data_dev/"
 target_path = sdgo_data_path + "txrs/decoded/"
 
 def extract_texture(file_name):
-	f = open(sdgo_data_path + file_name, "rb")
-	file_size = os.path.getsize(sdgo_data_path + file_name)
+	f = open(sdgo_data_path + "txrs/" + file_name, "rb")
+	file_size = os.path.getsize(sdgo_data_path + "txrs/" + file_name)
 	found_type = ""
 	fhex = f.read(file_size).hex().upper()
 	
@@ -33,8 +33,9 @@ def extract_texture(file_name):
 
 def main():
 	print("sdgo texture extractor")
+	os.chdir(sdgo_data_path)
 	pathlib.Path(target_path).mkdir(parents=True, exist_ok=True)
-	file_list = os.listdir(sdgo_data_path)
+	file_list = os.listdir(sdgo_data_path + "txrs")
 	txr_count = 0
 	tga_count = 0
 	png_count = 0
