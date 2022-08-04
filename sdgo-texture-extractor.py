@@ -13,8 +13,8 @@ def extract_texture(file_name):
 	fhex = f.read(file_size).hex().upper()
 	
 	# remove zoa header
-	if fhex.startswith("5A4F41544558310000000000"):
-		fhex = fhex.replace("5A4F41544558310000000000", "")
+	if fhex.startswith("5A4F415445583100"):
+		fhex = fhex[24:]
 	
 	# detect type
 	if fhex.startswith("424D"):
@@ -23,8 +23,10 @@ def extract_texture(file_name):
 		found_type = "png"
 	elif fhex.endswith("54525545564953494F4E2D5846494C452E00"):
 		found_type = "tga"
-	else: # if cannot find any recognized header, assume the file is dds, may need to improve this logic
+	elif fhex.startswith("44445320"): # if cannot find any recognized header, assume the file is dds, may need to improve this logic
 		found_type = "dds"
+	else:
+		found_type = "tga"
 	new_file = open(target_path + file_name.replace(".txr", "." + found_type), "wb")
 	new_file.write(bytes.fromhex(fhex))
 	f.close()
