@@ -1,9 +1,9 @@
 # SD Gundam Online Mod File Data Extractor
 # author: RedSuns Chan
 
+import struct
 import sys
 import codecs
-import json
 
 sdgo_data_path = "D:/Project/SDGO/data/"
 
@@ -53,6 +53,31 @@ def extract_bone_names(f, bone_count):
 		bone_str = ""
 	return bones
 
+def extract_materials(f, texture_count):
+	float_size = 68
+	texture_path_size = 512
+	materials = []
+	for i in range(texture_count):
+		floats_bytes = f.read(float_size).hex()
+		texture_path = ""
+		texture_path_bytes = f.read(texture_path_size).hex()
+		reversed_texture_path_bytes = ""
+		x = 0
+		while x < 512:
+			letter_byte = texture_path_bytes[0 + x : 2 + x]
+			if (letter_byte != "00"):
+				texture_path += str(codecs.decode(letter_byte, "hex"), "UTF-8")
+			x += 2
+		material = {}
+		material["floats"] = floats_bytes
+		material["texture"] = texture_path.replace('\\', "/")
+		materials.append(material)
+
+	return materials
+
+def read_next_float(f):
+	return struct.unpack('!f', reverse_hex(f.read(4).hex()))[0]
+
 def reverse_hex(hex: str):
 	output = ""
 	i = len(hex) - 1
@@ -67,6 +92,7 @@ def main(index):
 		try:
 			file_info = extract_header(f)
 			file_info["bone_names"] = extract_bone_names(f, file_info["bone_count"])
+			file_info["materials"] = extract_materials(f, file_info["texture_count"])
 			f.close()
 			print(file_info)
 		except FileExistsError:
