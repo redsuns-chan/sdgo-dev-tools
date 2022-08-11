@@ -2,8 +2,8 @@
 import os
 from pathlib import Path
 import shutil
+from toolconfig import sdgo_data_path
 
-sdgo_data_path = "D:/Project/SDGO/data/"
 target_path = sdgo_data_path + "scp/decoded/"
 
 command = "java -jar ./unlua.jar \"" + sdgo_data_path + "scp/{{filename}}.scp" + "\" > \"" + target_path + "{{filename}}.lua\""

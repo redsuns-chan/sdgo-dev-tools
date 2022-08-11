@@ -5,8 +5,8 @@
 import os
 from pathlib import Path
 import shutil
+from toolconfig import sdgo_data_path
 
-sdgo_data_path = "D:/Project/SDGO/data/"
 target_path = sdgo_data_path + "sdrs/decoded/"
 
 def main():

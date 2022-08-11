@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import sys
 
-sdgo_data_path = "G:\\Games\\SDGO_DEV\\data_dev\\"
+from toolconfig import sdgo_data_path
 
 def main(tex: str):
 	os.chdir(sdgo_data_path)

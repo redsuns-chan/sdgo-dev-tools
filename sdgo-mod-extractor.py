@@ -4,8 +4,7 @@
 import struct
 import sys
 import codecs
-
-sdgo_data_path = "D:/Project/SDGO/data/"
+from toolconfig import sdgo_data_path
 
 def extract_header(f):
 	read_zoa = 0

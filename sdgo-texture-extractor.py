@@ -2,8 +2,8 @@
 # author: RedSuns Chan
 import os
 import pathlib
+from toolconfig import sdgo_data_path
 
-sdgo_data_path = "G:/Games/SDGO_DEV/data_dev/"
 target_path = sdgo_data_path + "txrs/decoded/"
 
 def extract_texture(file_name):
